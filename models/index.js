@@ -38,6 +38,8 @@ db.triggers=require("./triggers")(sequelize,DataTypes)
 db.automations=require("./automations")(sequelize,DataTypes)
 db.dynamic_content_items=require("./dynamic_content_items")(sequelize,DataTypes)
 db.webhooks=require("./webhooks")(sequelize,DataTypes)
+db.organizations=require("./organizations")(sequelize,DataTypes)
+db.organization_fields=require("./organization_fields")(sequelize,DataTypes)
 
 
 //db.sequelize.sync({force:true})
