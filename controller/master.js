@@ -22,7 +22,8 @@ const Automation=db.automations
 const Macros=db.macros
 const User_fields=db.user_fields
 const Sla_Policies=db.sla_policies
-
+const Organisations=db.organizations
+const Organization_fields=db.organization_fields
 
 exports.getData=async(req,res)=>{
     const{id}=req.params;
@@ -536,7 +537,43 @@ exports.createSlaPoliciesBulk=async(req,res)=>{
    }))
    await Sla_Policies.bulkCreate(values)
 }
-
+exports.createOrganizationFieldsBulk=async(req,res)=>{
+    const values=req.body.organization_fields.map((item)=>({
+        url:item.url,
+        id:item.id,
+        type:item.type,
+        key:item.key,
+        title:item.title,
+        description:item.description,
+        raw_title:item.raw_title,
+        raw_description:item.raw_description,
+        position:item.position,
+        active:item.active,
+        system:item.system,
+        regexp_for_validation:item.regexp_for_validation,
+        custom_field_options:item.custom_field_options
+       
+   }))
+   await Organization_fields.bulkCreate(values)
+}
+exports.createOrganizationsBulk=async(req,res)=>{
+    const values=req.body.organization_fields.map((item)=>({
+        url:item.url,
+        id:item.id,
+        name:item.name,
+        shared_tickets:item.shared_tickets,
+        shared_comments:item.shared_comments,
+        external_id:item.external_id,
+        domain_names:item.domain_names,
+        details:item.details,
+        notes:item.notes,
+        group_id:item.group_id,
+        tags:item.tags,
+        organization_fields:item.organization_fields,
+       
+   }))
+   await Organisations.bulkCreate(values)
+}
 exports.deleteData=async(req,res)=>{
     const delData=await Conditions_any.destroy({where:{condition_any_id:req.params.id}})
     const delData1=await Conditions_all.destroy({where:{condition_all_id:req.params.id}})
