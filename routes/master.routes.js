@@ -1,5 +1,5 @@
 const express =require("express")
-const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk}=require("../controller/master")
+const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk}=require("../controller/master")
 
 const router = express.Router();
 
@@ -26,5 +26,6 @@ router.post("/groups",createGroupBulk)
 router.post("/slapolicies",createSlaPoliciesBulk)
 router.post("/organizations",createOrganizationsBulk)
 router.post("/orgfields",createOrganizationFieldsBulk)
+router.post("/ticketmaster",createTicketMasterBulk)
 
 module.exports = router;
