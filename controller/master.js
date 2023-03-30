@@ -24,6 +24,7 @@ const User_fields=db.user_fields
 const Sla_Policies=db.sla_policies
 const Organisations=db.organizations
 const Organization_fields=db.organization_fields
+const Ticket_master=db.ticket_master
 
 exports.getData=async(req,res)=>{
     const{id}=req.params;
@@ -574,6 +575,17 @@ exports.createOrganizationsBulk=async(req,res)=>{
    }))
    await Organisations.bulkCreate(values)
 }
+
+exports.createTicketMasterBulk=async(req,res)=>{
+    const values=req.body.ticket_master.map(item=>({
+        module:item.module,
+        condition:item.value,
+        operator:item.operator,
+        value:item.value
+    }))
+    await Ticket_master.bulkCreate(values)
+}
+
 exports.deleteData=async(req,res)=>{
     const delData=await Conditions_any.destroy({where:{condition_any_id:req.params.id}})
     const delData1=await Conditions_all.destroy({where:{condition_all_id:req.params.id}})

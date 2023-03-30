@@ -40,7 +40,11 @@ db.dynamic_content_items=require("./dynamic_content_items")(sequelize,DataTypes)
 db.webhooks=require("./webhooks")(sequelize,DataTypes)
 db.organizations=require("./organizations")(sequelize,DataTypes)
 db.organization_fields=require("./organization_fields")(sequelize,DataTypes)
+db.ticket_master=require("./ticket_master")(sequelize,DataTypes)
 
 
-//db.sequelize.sync({force:true})
+db.sequelize.sync({
+    alter: true,
+    force: false,
+  })
 module.exports=db
