@@ -5,7 +5,7 @@ module.exports=(sequelize,DataTypes)=>{
             allowNull: true
           },
         id: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.BIGINT,
           allowNull: false,
           primaryKey: true
           /* references: {
