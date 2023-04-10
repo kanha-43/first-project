@@ -26,6 +26,31 @@ const Organisations=db.organizations
 const Organization_fields=db.organization_fields
 const Ticket_master=db.ticket_master
 
+const Automation_Action=db.automation_action
+const Automation_Cond_all=db.automation_cond_all
+const Automation_Cond_any=db.automation_cond_any
+
+const Macros_Action=db.macros_action
+
+const Organization_Field_custom=db.organization_field_custom
+
+const Tags_Keys=db.tags_keys
+
+const Dynamic_Content_Variants=db.dynamic_content_variants
+
+const Schedules_Intervals=db.schedules_intervals
+
+const Trigger_Action=db.trigger_action
+const Trigger_Cond_all=db.trigger_cond_all
+const Trigger_Cond_any=db.trigger_cond_any
+
+const Sla_filter_all=db.sla_filter_all
+const Sla_filter_any=db.sla_filter_any
+const Sla_policy_metrics=db.sla_policy_metrics
+
+//Main master table 
+const Master_main=db.main_master
+
 exports.getData=async(req,res)=>{
     const{id}=req.params;
     const test=await Conditions_all.findOne({where:{id:id}})
@@ -163,9 +188,9 @@ exports.createBulkData=async(req,res)=>{
     const values2=req.body.targets.map((item)=>{
         const temp= item.conditions.all.map((innerItem)=>({
             condition_all_id:item.id,
-             field:innerItem.field,
-             operator:innerItem.opertor,
-             value:innerItem.value,
+            field:innerItem.field,
+            operator:innerItem.opertor,
+            value:innerItem.value,
          }))
          return temp
      }).flat()
@@ -247,6 +272,41 @@ exports.createTriggerBulk=async(req,res)=>{
         category_id:item.category_id
    }))
    await Triggers.bulkCreate(values)
+   const values1=req.body.triggers.map((item)=>{
+    const temp= item.actions.map((innerItem)=>({
+         action_id:item.id,
+         field:innerItem.field,
+         value:innerItem.value,
+     }))
+     return temp
+ }).flat()
+ 
+ await Trigger_Action.bulkCreate(values1)
+
+ const values2=req.body.triggers.map((item)=>{
+     const temp= item.conditions.all.map((innerItem)=>({
+         condition_all_id:item.id,
+          field:innerItem.field,
+          operator:innerItem.opertor,
+          value:innerItem.value,
+      }))
+      return temp
+  }).flat()
+
+ await Trigger_Cond_all.bulkCreate(values2)
+
+ const values3=req.body.triggers.map((item)=>{
+     const temp= item.conditions.any.map((innerItem)=>({
+         condition_any_id:item.id,
+          field:innerItem.field,
+          operator:innerItem.operator,
+          value:innerItem.value,
+      }))
+      return temp
+  }).flat()
+ await Trigger_Cond_any.bulkCreate(values3)
+
+ res.status(200).send("Bulk insertion completed for all 4 tables .")
 }
 //1
 exports.createTagsBulk=async(req,res)=>{
@@ -256,6 +316,17 @@ exports.createTagsBulk=async(req,res)=>{
         
    }))
    await Tags.bulkCreate(values)
+
+   const values1=req.body.tags.map((item)=>{
+    const temp= item.actions.map((innerItem)=>({
+         
+         name:innerItem.name,
+         count:innerItem.count,
+     }))
+     return temp
+ }).flat()
+ 
+ await Tags_Keys.bulkCreate(values1)
 }
 //2
 exports.createGroupBulk=async(req,res)=>{
@@ -357,6 +428,22 @@ exports.createDynamicContentBulk=async(req,res)=>{
       
    }))
    await Dynamic_Content.bulkCreate(values)
+
+   const values1=req.body.items.map((item)=>{
+    const temp= item.variants.map((innerItem)=>({ 
+        dynamic_content_id:item.id,
+        url:innerItem.url,
+        id:innerItem.id,
+        content:innerItem.content,
+        locale_id:innerItem.locale_id,
+        outdated:innerItem.outdated,
+        active:innerItem.active,
+        default:innerItem.default
+     }))
+     return temp
+ }).flat()
+ 
+ await Dynamic_Content_Variants.bulkCreate(values1)
 }
 //8
 exports.createSchedulesBulk=async(req,res)=>{
@@ -369,6 +456,18 @@ exports.createSchedulesBulk=async(req,res)=>{
       
    }))
    await Schedules.bulkCreate(values)
+
+   const values1=req.body.schedules.map((item)=>{
+    const temp= item.intervals.map((innerItem)=>({
+         
+         start_time:innerItem.start_time,
+         end_time:innerItem.end_time,
+     }))
+     return temp
+ }).flat()
+ 
+ await Schedules_Intervals.bulkCreate(values1)
+   
 }
 //9
 exports.createTicketFieldsBulk=async(req,res)=>{
@@ -449,6 +548,39 @@ exports.createAutomationsBulk=async(req,res)=>{
        
    }))
    await Automation.bulkCreate(values)
+   const values1=req.body.automations.map((item)=>{
+    const temp= item.actions.map((innerItem)=>({
+         action_id:item.id,
+         field:innerItem.field,
+         value:innerItem.value,
+     }))
+     return temp
+ }).flat()
+ 
+ await Automation_Action.bulkCreate(values1)
+
+ const values2=req.body.automations.map((item)=>{
+     const temp= item.conditions.all.map((innerItem)=>({
+         condition_all_id:item.id,
+          field:innerItem.field,
+          operator:innerItem.opertor,
+          value:innerItem.value,
+      }))
+      return temp
+  }).flat()
+
+ await Automation_Cond_all.bulkCreate(values2)
+
+ const values3=req.body.automations.map((item)=>{
+     const temp= item.conditions.any.map((innerItem)=>({
+         condition_any_id:item.id,
+          field:innerItem.field,
+          operator:innerItem.operator,
+          value:innerItem.value,
+      }))
+      return temp
+  }).flat()
+ await Automation_Cond_any.bulkCreate(values3)
 }
 //12
 exports.createMacrosBulk=async(req,res)=>{
@@ -468,6 +600,16 @@ exports.createMacrosBulk=async(req,res)=>{
        
    }))
    await Macros.bulkCreate(values)
+   const values1=req.body.macros.map((item)=>{
+    const temp= item.actions.map((innerItem)=>({
+         action_id:item.id,
+         field:innerItem.field,
+         value:innerItem.value,
+     }))
+     return temp
+ }).flat()
+ await Macros_Action.bulkCreate(values1)
+ 
 }
 //13
 exports.createUserFieldsBulk=async(req,res)=>{
@@ -537,6 +679,44 @@ exports.createSlaPoliciesBulk=async(req,res)=>{
        
    }))
    await Sla_Policies.bulkCreate(values)
+
+   const values1=req.body.sla_policies.map((item)=>{
+    const temp= item.policy_metrics.map((innerItem)=>({
+        sla_id:item.id,
+         priority:innerItem.priority,
+         metric:innerItem.metric,
+         target:innerItem.target,
+         business_hours:innerItem.business_hours,
+     }))
+     return temp
+ }).flat()
+ 
+ await Sla_policy_metrics.bulkCreate(values1)
+
+ const values2=req.body.sla_policies.map((item)=>{
+     const temp= item.filter.all.map((innerItem)=>({
+         filter_all_id:item.id,
+          field:innerItem.field,
+          operator:innerItem.opertor,
+          value:innerItem.value,
+      }))
+      return temp
+  }).flat()
+
+ await Sla_filter_all.bulkCreate(values2)
+
+ const values3=req.body.sla_policies.map((item)=>{
+     const temp= item.filter.any.map((innerItem)=>({
+         filter_any_id:item.id,
+          field:innerItem.field,
+          operator:innerItem.operator,
+          value:innerItem.value,
+      }))
+      return temp
+  }).flat()
+ await Sla_filter_any.bulkCreate(values3)
+
+ res.status(200).send("Bulk insertion completed for all 4 tables .")
 }
 exports.createOrganizationFieldsBulk=async(req,res)=>{
     const values=req.body.organization_fields.map((item)=>({
@@ -556,6 +736,18 @@ exports.createOrganizationFieldsBulk=async(req,res)=>{
        
    }))
    await Organization_fields.bulkCreate(values)
+
+   const values1=req.body.organization_fields.map((item)=>{
+    const temp= item.custom_field_options.map((innerItem)=>({
+        custom_field_id:item.id,
+        id:innerItem.id,
+        name:innerItem.name,
+         raw_name:innerItem.raw_name,
+         value:innerItem.value,
+     }))
+     return temp
+ }).flat()
+await Organization_Field_custom.bulkCreate(values1)
 }
 exports.createOrganizationsBulk=async(req,res)=>{
     const values=req.body.organization_fields.map((item)=>({
@@ -577,7 +769,7 @@ exports.createOrganizationsBulk=async(req,res)=>{
 }
 
 exports.createTicketMasterBulk=async(req,res)=>{
-    const values=req.body.ticket_master.map(item=>({
+    const values=req.body.master.map(item=>({
         module:item.module,
         condition:item.value,
         operator:item.operator,
@@ -585,6 +777,35 @@ exports.createTicketMasterBulk=async(req,res)=>{
     }))
     await Ticket_master.bulkCreate(values)
 }
+
+exports.createMainMaster=async(req,res)=>{
+    const values=req.body.main.map(item=>({
+        Criteria_ID:item.Criteria_ID,
+        Field_Business_Name:item.Field_Business_Name,
+        Operator_business_reference:item.Operator_business_reference,
+        Value_Business_reference:item.Value_Business_reference,
+        Conditions_API_Name:item.Conditions_API_Name,
+        Operator_API_Reference:item.Operator_API_Reference,
+        Value_API_reference:item.Value_API_reference,
+        Value_Type:item.Value_Type,
+        Category:item.Category
+    }))
+    await Master_main.bulkCreate(values)
+    res.status(200).send("Bulk insertion successful..")
+}
+/* exports.createAutomationActionBulksync=async(req,res)=>{
+    const values=req.body.master.map(item=>({
+        
+        condition:item.value,
+        operator:item.operator,
+        value:item.value
+    }))
+    await Ticket_master.bulkCreate(values)
+
+} */
+
+
+
 
 exports.deleteData=async(req,res)=>{
     const delData=await Conditions_any.destroy({where:{condition_any_id:req.params.id}})

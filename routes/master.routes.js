@@ -1,10 +1,13 @@
 const express =require("express")
-const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk}=require("../controller/master")
+const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk, createMainMaster}=require("../controller/master");
+const { readBrandData, readGroupData } = require("../controller/read");
 
 const router = express.Router();
 
-router.get('/:id',getData );
-router.delete('/delete/:id',deleteData );
+//read data
+router.get("/getbrands",readBrandData)
+router.get('/getgroups',readGroupData)
+/*  */
 router.post('/insert', createData);
 router.post('/bulkadd',createBulkData)
 
@@ -27,5 +30,12 @@ router.post("/slapolicies",createSlaPoliciesBulk)
 router.post("/organizations",createOrganizationsBulk)
 router.post("/orgfields",createOrganizationFieldsBulk)
 router.post("/ticketmaster",createTicketMasterBulk)
+
+//main master
+router.post("/main",createMainMaster)
+
+router.get('/:id',getData );
+router.delete('/delete/:id',deleteData );
+
 
 module.exports = router;

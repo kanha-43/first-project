@@ -42,9 +42,34 @@ db.organizations=require("./organizations")(sequelize,DataTypes)
 db.organization_fields=require("./organization_fields")(sequelize,DataTypes)
 db.ticket_master=require("./ticket_master")(sequelize,DataTypes)
 
+db.automation_action=require('./automation_action')(sequelize,DataTypes)
+db.automation_cond_all=require('./automation_cond_all')(sequelize,DataTypes)
+db.automation_cond_any=require('./automation_cond_any')(sequelize,DataTypes)
+
+db.macros_action=require('./macros_action')(sequelize,DataTypes)
+
+db.organization_field_custom=require("./organization_field_custom")(sequelize,DataTypes)
+
+db.tags_keys=require("./tags_keys")(sequelize,DataTypes)
+
+db.dynamic_content_variants=require('./dynamic_content_variants')(sequelize,DataTypes)
+
+db.schedules_intervals=require("./schedules_intervals")(sequelize,DataTypes)
+
+db.trigger_action=require('./trigger_action')(sequelize,DataTypes)
+db.trigger_cond_all=require('./trigger_cond_all')(sequelize,DataTypes)
+db.trigger_cond_any=require('./trigger_cond_any')(sequelize,DataTypes)
+
+db.sla_filter_all=require('./sla_filter_all')(sequelize,DataTypes)
+db.sla_filter_any=require('./sla_filter_any')(sequelize,DataTypes)
+db.sla_policy_metrics=require('./sla_policy_metrics')(sequelize,DataTypes)
+
+//main master
+db.main_master=require('./main_master')(sequelize,DataTypes)
 
 db.sequelize.sync({
-    alter: true,
+    /* force:true */
+   alter: true,
     force: false,
   })
 module.exports=db
