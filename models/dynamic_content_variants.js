@@ -4,7 +4,7 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.BIGINT,
             allowNull: false,
             references: {
-              model: 'dynamic_content_items',
+              model: 'dynamic_content_item',
               key: 'id'
             }
           },
@@ -44,7 +44,7 @@ module.exports=(sequelize,DataTypes)=>{
         
       }, {
         sequelize,
-        tableName: 'dynamic_content-variants',
+        tableName: 'dynamic_content_variants',
         timestamps: false,
 
       });

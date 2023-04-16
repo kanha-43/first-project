@@ -327,6 +327,8 @@ exports.createTagsBulk=async(req,res)=>{
  }).flat()
  
  await Tags_Keys.bulkCreate(values1)
+ res.status(200).send("Bulk insertion completed for all tables .")
+
 }
 //2
 exports.createGroupBulk=async(req,res)=>{
@@ -357,6 +359,8 @@ exports.createLocalesBulk=async(req,res)=>{
        
    }))
    await Locales.bulkCreate(values)
+   res.status(201).send("record added successfully...")
+   
 }
 //4
 exports.createPublicLocalesBulk=async(req,res)=>{
@@ -373,6 +377,7 @@ exports.createPublicLocalesBulk=async(req,res)=>{
        
    }))
    await All_public_locales.bulkCreate(values)
+   res.status(201).send("record added successfully...")
 }
 //5
 exports.createBrandsBulk=async(req,res)=>{
@@ -396,6 +401,8 @@ exports.createBrandsBulk=async(req,res)=>{
        
    }))
    await Brands.bulkCreate(values)
+   res.status(201).send("record added successfully...")
+
 }
 //6
 exports.createSupportEmailAddressBulk=async(req,res)=>{
@@ -414,6 +421,8 @@ exports.createSupportEmailAddressBulk=async(req,res)=>{
       
    }))
    await Support_email_add.bulkCreate(values)
+   res.status(201).send("record added successfully...")
+
 }
 //7
 exports.createDynamicContentBulk=async(req,res)=>{
@@ -444,6 +453,8 @@ exports.createDynamicContentBulk=async(req,res)=>{
  }).flat()
  
  await Dynamic_Content_Variants.bulkCreate(values1)
+ res.status(201).send("record added successfully...")
+
 }
 //8
 exports.createSchedulesBulk=async(req,res)=>{
@@ -459,7 +470,7 @@ exports.createSchedulesBulk=async(req,res)=>{
 
    const values1=req.body.schedules.map((item)=>{
     const temp= item.intervals.map((innerItem)=>({
-         
+        schedule_id:item.id,
          start_time:innerItem.start_time,
          end_time:innerItem.end_time,
      }))
@@ -467,6 +478,8 @@ exports.createSchedulesBulk=async(req,res)=>{
  }).flat()
  
  await Schedules_Intervals.bulkCreate(values1)
+ res.status(201).send("record added successfully...")
+
    
 }
 //9
@@ -498,6 +511,8 @@ exports.createTicketFieldsBulk=async(req,res)=>{
        
    }))
    await Ticket_fields.bulkCreate(values)
+   res.status(201).send("record added successfully...")
+
 }
 //10
 /* exports.createTicketFieldsBulk=async(req,res)=>{
@@ -559,6 +574,19 @@ exports.createAutomationsBulk=async(req,res)=>{
  
  await Automation_Action.bulkCreate(values1)
 
+ await Automation.bulkCreate(values)
+ const valuesnew=req.body.automations.map((item)=>{
+  const temp= item.actions.map((innerItem)=>({
+    
+       action_id:item.id,
+       field:innerItem.field,
+       value:innerItem.value,
+   }))
+   return temp
+}).flat()
+
+await Automation_Action.bulkCreate(valuesnew)
+
  const values2=req.body.automations.map((item)=>{
      const temp= item.conditions.all.map((innerItem)=>({
          condition_all_id:item.id,
@@ -581,6 +609,8 @@ exports.createAutomationsBulk=async(req,res)=>{
       return temp
   }).flat()
  await Automation_Cond_any.bulkCreate(values3)
+ res.status(201).send("record added successfully...")
+
 }
 //12
 exports.createMacrosBulk=async(req,res)=>{
@@ -609,6 +639,7 @@ exports.createMacrosBulk=async(req,res)=>{
      return temp
  }).flat()
  await Macros_Action.bulkCreate(values1)
+ res.status(201).send("record added successfully...")
  
 }
 //13
@@ -629,6 +660,8 @@ exports.createUserFieldsBulk=async(req,res)=>{
        
    }))
    await User_fields.bulkCreate(values)
+ res.status(201).send("record added successfully...")
+
 }
 //14
 exports.createWebhooksBulk=async(req,res)=>{
@@ -648,6 +681,7 @@ exports.createWebhooksBulk=async(req,res)=>{
        
    }))
    await Webhooks.bulkCreate(values)
+   res.status(201).send("record added successfully...")
 }
 //15
 /* exports.createUserFieldsBulk=async(req,res)=>{
@@ -737,20 +771,23 @@ exports.createOrganizationFieldsBulk=async(req,res)=>{
    }))
    await Organization_fields.bulkCreate(values)
 
-   const values1=req.body.organization_fields.map((item)=>{
-    const temp= item.custom_field_options.map((innerItem)=>({
+    const values1=req.body.organization_fields.map((item)=>{
+    const temp= item.custom_field_options?.map((innerItem)=>({
         custom_field_id:item.id,
         id:innerItem.id,
         name:innerItem.name,
-         raw_name:innerItem.raw_name,
-         value:innerItem.value,
+        raw_name:innerItem.raw_name,
+        value:innerItem.value,
      }))
      return temp
  }).flat()
 await Organization_Field_custom.bulkCreate(values1)
+
+res.status(200).send("Bulk insertion completed for all tables .")
+
 }
 exports.createOrganizationsBulk=async(req,res)=>{
-    const values=req.body.organization_fields.map((item)=>({
+    const values=req.body.organizations.map((item)=>({
         url:item.url,
         id:item.id,
         name:item.name,
