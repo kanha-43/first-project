@@ -34,7 +34,7 @@ module.exports=(sequelize,DataTypes)=>{
          
       }, {
         sequelize,
-        tableName: 'dynamic_content_items',
+        tableName: 'dynamic_content_item',
         timestamps: false,
 
       });

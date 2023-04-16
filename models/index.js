@@ -69,6 +69,7 @@ db.main_master=require('./main_master')(sequelize,DataTypes)
 
 db.sequelize.sync({
     /* force:true */
+    
    alter: true,
     force: false,
   })

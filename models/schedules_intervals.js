@@ -2,6 +2,14 @@
 const sequelize = require("./index"); */
 module.exports=(sequelize,DataTypes)=>{
     const Schedules_Intervals = sequelize.define('Schedules_Intervals', {
+      schedule_id: {
+        type: DataTypes.BIGINT,
+      allowNull: true,
+      references: {
+        model: 'schedules',
+        key: 'id'
+      }
+    },
         start_time: {
             type: DataTypes.STRING,
           allowNull: true

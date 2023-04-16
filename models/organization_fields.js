@@ -7,7 +7,7 @@ module.exports=(sequelize,DataTypes)=>{
       },
       id: {
         type: DataTypes.BIGINT,
-        //allowNull: false,
+        allowNull: false,
         primaryKey: true
       },
       type: {
