@@ -29,6 +29,7 @@ const Ticket_master=db.ticket_master
 const Automation_Action=db.automation_action
 const Automation_Cond_all=db.automation_cond_all
 const Automation_Cond_any=db.automation_cond_any
+const Automation_Action_user_and_group=db.automation_action_user_and_group
 
 const Macros_Action=db.macros_action
 
@@ -473,6 +474,8 @@ exports.createSchedulesBulk=async(req,res)=>{
         schedule_id:item.id,
          start_time:innerItem.start_time,
          end_time:innerItem.end_time,
+         start_day:(innerItem.start_time>=0 && innerItem.start_time<=1439)?"sunday":(innerItem.start_time>=1440 && innerItem.start_time<=2879)?"monday":(innerItem.start_time>=2880 && innerItem.start_time<=4319)?"tuesday":(innerItem.start_time>=4320 && innerItem.start_time<=5759)?"wednesday":(innerItem.start_time>=5760 && innerItem.start_time<7199)?"thursday":(innerItem.start_time>=7200 && innerItem.start_time<=8639)?"friday":(innerItem.start_time>=8640 && innerItem.start_time<=10079)?"saturday":"sunday",
+         end_day:(innerItem.start_time>=0 && innerItem.start_time<=1439)?"sunday":(innerItem.start_time>=1440 && innerItem.start_time<=2879)?"monday":(innerItem.start_time>=2880 && innerItem.start_time<=4319)?"tuesday":(innerItem.start_time>=4320 && innerItem.start_time<=5759)?"wednesday":(innerItem.start_time>=5760 && innerItem.start_time<7199)?"thursday":(innerItem.start_time>=7200 && innerItem.start_time<=8639)?"friday":(innerItem.start_time>=8640 && innerItem.start_time<=10079)?"saturday":"sunday" ,
      }))
      return temp
  }).flat()
@@ -562,8 +565,9 @@ exports.createAutomationsBulk=async(req,res)=>{
 
        
    }))
+  
    await Automation.bulkCreate(values)
-   const values1=req.body.automations.map((item)=>{
+   /* const values1=req.body.automations.map((item)=>{
     const temp= item.actions.map((innerItem)=>({
          action_id:item.id,
          field:innerItem.field,
@@ -572,20 +576,42 @@ exports.createAutomationsBulk=async(req,res)=>{
      return temp
  }).flat()
  
- await Automation_Action.bulkCreate(values1)
+ await Automation_Action.bulkCreate(values1) */
 
- await Automation.bulkCreate(values)
- const valuesnew=req.body.automations.map((item)=>{
-  const temp= item.actions.map((innerItem)=>({
+const { valuenew1, valuenew2 } = req.body.automations.reduce((acc, item) => {
+    const temp = item.actions.reduce((innerAcc, innerItem) => {
+      if (innerItem.field === 'notification_user' || innerItem.field === 'notification_group') {
+        
+        innerAcc.valuenew1.push({
+          action_id: item.id,
+          field: innerItem.field,
+          notification_group_name: innerItem.value[0],
+          email_subject:innerItem.value[1],
+          email_body:innerItem.value[2],
+        });
+      } else{
+        innerAcc.valuenew2.push({
+          action_id: item.id,
+          field: innerItem.field,
+          value: innerItem.value,
+        });
+      }
+      return innerAcc;
+    }, acc);
+    //console.log(temp)
+    return temp;
     
-       action_id:item.id,
-       field:innerItem.field,
-       value:innerItem.value,
-   }))
-   return temp
-}).flat()
+  }, { valuenew1: [], valuenew2: [] });
+  const valueToString1=JSON.stringify(valuenew1)
+  const valueToString2=JSON.stringify(valuenew2)
+  const valToJson1=JSON.parse(valueToString1)
+  const valToJson2=JSON.parse(valueToString2)
+  
+ /*  console.log(valToJson1)
+  console.log(valToJson2) */
+  await Automation_Action_user_and_group.bulkCreate(valToJson1) 
+  await Automation_Action.bulkCreate(valToJson2)
 
-await Automation_Action.bulkCreate(valuesnew)
 
  const values2=req.body.automations.map((item)=>{
      const temp= item.conditions.all.map((innerItem)=>({
@@ -731,7 +757,7 @@ exports.createSlaPoliciesBulk=async(req,res)=>{
      const temp= item.filter.all.map((innerItem)=>({
          filter_all_id:item.id,
           field:innerItem.field,
-          operator:innerItem.opertor,
+          operator:innerItem.operator,
           value:innerItem.value,
       }))
       return temp

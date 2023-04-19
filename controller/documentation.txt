@@ -1,0 +1,10 @@
+for automation action 
+To store the values in two different variables based on the value of innerItem.field, you can use the Array.prototype.reduce() method instead of Array.prototype.map(). The reduce() method allows you to accumulate values into one or more variables based on a condition. Here's an example of how you can modify the code to use the reduce() 
+
+In this code, we're using the reduce() method twice: once for the outer array (req.body.automations) and once for the inner array (item.actions). The reduce() method takes two arguments: a callback function and an initial accumulator value. The callback function takes two arguments: the accumulator and the current element of the array. It should return a new accumulator value based on the current element.
+
+In the inner reduce() method, we're checking the value of innerItem.field and pushing the corresponding object into the appropriate accumulator (innerAcc.valuenew1 or innerAcc.valuenew2).
+
+In the outer reduce() method, we're passing an initial accumulator object { valuenew1: [], valuenew2: [] } and returning the final accumulator value, which will contain the accumulated objects in valuenew1 and valuenew2.
+
+After running this code, you should have two separate arrays valuenew1 and valuenew2 containing the objects from req.body.automations where the field property of innerItem is 'field1' and 'field2', respectively.
