@@ -1,34 +1,34 @@
 /* const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require("./index"); */
 module.exports=(sequelize,DataTypes)=>{
-    const Schedules_Intervals = sequelize.define('Schedules_Intervals', {
-      schedule_id: {
-        type: DataTypes.BIGINT,
-      allowNull: true,
-      references: {
-        model: 'schedules',
-        key: 'id'
-      }
-    },
-        start_time: {
-            type: DataTypes.STRING,
+    const Automation_Action_user_and_group = sequelize.define('Automation_Action_user_and_group', {
+        action_id: {
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          references: {
+            model: 'automations',
+            key: 'id'
+          }
+        },
+        field: {
+          type: DataTypes.STRING,
           allowNull: true
         },
-        end_time: {
+        notification_group_name: {
             type: DataTypes.STRING,
             allowNull: true
           },
-        start_day: {
+        email_subject: {
             type: DataTypes.STRING,
             allowNull: true
           },
-        end_day: {
-            type: DataTypes.STRING,
+        email_body: {
+            type: DataTypes.TEXT,
             allowNull: true
-          }
+          },
       }, {
         sequelize,
-        tableName: 'schedules_intervals',
+        tableName: 'automation_action_user_and_group',
         timestamps: false,
         /* indexes: [
           {
@@ -41,7 +41,7 @@ module.exports=(sequelize,DataTypes)=>{
           },
         ] */
       });
-      return Schedules_Intervals;
+      return Automation_Action_user_and_group;
     }
     
     /* field: {

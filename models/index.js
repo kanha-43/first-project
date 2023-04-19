@@ -56,6 +56,8 @@ db.dynamic_content_variants=require('./dynamic_content_variants')(sequelize,Data
 
 db.schedules_intervals=require("./schedules_intervals")(sequelize,DataTypes)
 
+db.ticket_forms=require('./ticket_forms')(sequelize,DataTypes)
+
 db.trigger_action=require('./trigger_action')(sequelize,DataTypes)
 db.trigger_cond_all=require('./trigger_cond_all')(sequelize,DataTypes)
 db.trigger_cond_any=require('./trigger_cond_any')(sequelize,DataTypes)
@@ -63,7 +65,7 @@ db.trigger_cond_any=require('./trigger_cond_any')(sequelize,DataTypes)
 db.sla_filter_all=require('./sla_filter_all')(sequelize,DataTypes)
 db.sla_filter_any=require('./sla_filter_any')(sequelize,DataTypes)
 db.sla_policy_metrics=require('./sla_policy_metrics')(sequelize,DataTypes)
-
+db.automation_action_user_and_group=require('./automation_action_user_and_group')(sequelize,DataTypes)
 //main master
 db.main_master=require('./main_master')(sequelize,DataTypes)
 
