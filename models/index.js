@@ -1,10 +1,15 @@
 const {Sequelize, DataTypes}=require("sequelize");
 
-const sequelize = new Sequelize('assignment', 'root', 'root', {
+/* const sequelize = new Sequelize('assignment', 'root', 'root', {
     host: 'localhost',
     logging:false,
-    dialect: "mysql" /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-  });
+    dialect: "mysql" // one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' 
+  }); */
+  const sequelize = new Sequelize("ZD_DB","controller","6pxKCmdj3ZE9pP3ZwP2q",{
+    host: 'tecrivuletmysqldev.cs5arscht7ca.us-east-1.rds.amazonaws.com',
+    logging:false,
+    dialect: "mysql"
+  })
 
   try {
     sequelize.authenticate();
@@ -56,7 +61,6 @@ db.dynamic_content_variants=require('./dynamic_content_variants')(sequelize,Data
 
 db.schedules_intervals=require("./schedules_intervals")(sequelize,DataTypes)
 
-db.ticket_forms=require('./ticket_forms')(sequelize,DataTypes)
 
 db.trigger_action=require('./trigger_action')(sequelize,DataTypes)
 db.trigger_cond_all=require('./trigger_cond_all')(sequelize,DataTypes)
@@ -66,6 +70,13 @@ db.sla_filter_all=require('./sla_filter_all')(sequelize,DataTypes)
 db.sla_filter_any=require('./sla_filter_any')(sequelize,DataTypes)
 db.sla_policy_metrics=require('./sla_policy_metrics')(sequelize,DataTypes)
 db.automation_action_user_and_group=require('./automation_action_user_and_group')(sequelize,DataTypes)
+
+db.ticket_forms=require('./ticket_forms')(sequelize,DataTypes)
+db.ticket_form_end_user_condition=require('./ticket_form_end_user_condition')(sequelize,DataTypes)
+db.ticket_form_end_user_child=require('./ticket_form_end_user_condn_child_field')(sequelize,DataTypes)
+db.ticket_form_agent_condition=require('./ticket_form_agent_conditions')(sequelize,DataTypes)
+db.ticket_form_agent_child=require('./ticket_form_agent_condn_child_field')(sequelize,DataTypes)
+
 //main master
 db.main_master=require('./main_master')(sequelize,DataTypes)
 

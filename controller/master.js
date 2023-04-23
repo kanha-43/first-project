@@ -31,6 +31,12 @@ const Automation_Cond_all=db.automation_cond_all
 const Automation_Cond_any=db.automation_cond_any
 const Automation_Action_user_and_group=db.automation_action_user_and_group
 
+const Ticket_forms=db.ticket_forms
+const Ticket_forms_agent_cond=db.ticket_form_agent_condition
+const Ticket_forms_end_user_cond=db.ticket_form_end_user_condition
+const Ticket_forms_agent_cond_child_field=db.ticket_form_agent_child
+const Ticket_forms_end_user_child_field=db.ticket_form_end_user_child
+
 const Macros_Action=db.macros_action
 
 const Organization_Field_custom=db.organization_field_custom
@@ -840,6 +846,98 @@ exports.createTicketMasterBulk=async(req,res)=>{
     }))
     await Ticket_master.bulkCreate(values)
 }
+exports.createTicketFormBulk=async(req,res)=>{
+    const values=req.body.ticket_forms.map(item=>({
+        url:item.url,
+        id:item.id,
+        name:item.name,
+        raw_name:item.raw_name,
+        display_name:item.display_name,
+        raw_display_name:item.raw_display_name,
+        end_user_visible:item.end_user_visible,
+        position:item.position,
+        ticket_field_ids:item.ticket_field_ids,
+        active:item.active,
+        default:item.default,
+        in_all_brands:item.in_all_brands,
+        restricted_brand_ids:item.restricted_brand_ids,
+        
+        
+    }))
+    await Ticket_forms.bulkCreate(values)
+
+    const values1=req.body.ticket_forms.map((item)=>{
+        const temp= item.end_user_conditions?.map((innerItem)=>({
+            
+            ticket_form_id:item.id,
+            parent_field_id:innerItem.parent_field_id,
+            parent_field_type:innerItem.parent_field_type,
+            value:innerItem.value,
+            
+         }))
+         return temp
+     }).flat()
+    await Ticket_forms_end_user_cond.bulkCreate(values1)
+    
+    const values2=req.body.ticket_forms.map((item)=>{
+        const temp= item.agent_conditions?.map((innerItem)=>({
+            ticket_form_id:item.id,
+            parent_field_id:innerItem.parent_field_id,
+            parent_field_type:innerItem.parent_field_type,
+            value:innerItem.value,
+            
+         }))
+         return temp
+     }).flat()
+    await Ticket_forms_agent_cond.bulkCreate(values2)
+    /*  */
+
+    const values3 = req.body.ticket_forms.map((item) => {
+        const temp = item.agent_conditions?.map((innerItem) => {
+            const childFields = innerItem?.child_fields?.map((childItem) => {
+                // extract values from childItem here
+                return {
+                    // child field properties
+                    ticket_form_id:item.id,
+                    parent_field_id:innerItem.parent_field_id,
+                    child_id:childItem.id,
+                    is_required:childItem.is_required,
+                    required_on_statuses_type:childItem.required_on_statuses['type'],
+                    required_on_statuses_status:childItem.required_on_statuses['statuses'],
+
+                }
+            })
+            return childFields
+        })
+        return temp.flat(2) // use flat() with depth 2 to flatten child_fields array
+    }).flat(1) // use flat() with depth 1 to flatten the entire result array
+    //console.log(values3)
+   await Ticket_forms_agent_cond_child_field.bulkCreate(values3) 
+
+ // use flat() with depth 1 to flatten the entire result array
+     const value4 = req.body.ticket_forms.map((item) => {
+        const temp = item.end_user_conditions?.map((innerItem) => {
+            const childFields = innerItem?.child_fields?.map((childItem) => {
+                // extract values from childItem here
+                return {
+                    // child field properties
+                    ticket_form_id:item.id,
+                    parent_field_id:innerItem.parent_field_id,
+                    child_id:childItem.id,
+                    is_required:childItem.is_required,
+                    
+                }
+            })
+            return childFields
+        })
+        return temp.flat(2) // use flat() with depth 2 to flatten child_fields array
+    }).flat(1)
+    
+    await Ticket_forms_end_user_child_field.bulkCreate(value4)
+    
+    res.status(200).send("sent successfully ...")
+}
+
 
 exports.createMainMaster=async(req,res)=>{
     const values=req.body.main.map(item=>({
