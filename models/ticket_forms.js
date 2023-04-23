@@ -7,7 +7,7 @@ module.exports=(sequelize,DataTypes)=>{
       },
       id: {
         type: DataTypes.BIGINT,
-        //allowNull: false,
+        allowNull: false,
         primaryKey: true
       },
       name: {
@@ -55,14 +55,8 @@ module.exports=(sequelize,DataTypes)=>{
         type: DataTypes.JSON,
         allowNull: true
       },
-      end_user_conditions: {
-        type: DataTypes.JSON,
-        allowNull: true
-      },
-      agent_conditions: {
-        type: DataTypes.JSON,
-        allowNull: true
-      },
+      
+     
       
     }, {
         sequelize,
