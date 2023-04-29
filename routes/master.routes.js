@@ -1,5 +1,5 @@
 const express =require("express")
-const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk, createMainMaster, createTicketFormBulk}=require("../controller/master");
+const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk, createMainMaster, createTicketFormBulk, deleteBulk}=require("../controller/master");
 const { readBrandData, readGroupData, readMainMasterData, readBrandID, readConditionAllData } = require("../controller/read");
 
 const router = express.Router();
@@ -35,6 +35,9 @@ router.post("/ticketmaster",createTicketMasterBulk)
 router.post('/ticketform',createTicketFormBulk)
 //main master
 router.post("/main",createMainMaster)
+
+//delete
+router.delete("/bulkdel",deleteBulk)
 
 router.get('/getmaster/:name',readMainMasterData)
 
