@@ -15,15 +15,21 @@ module.exports=(sequelize,DataTypes)=>{
           },
         name: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci'
           },
         native_name: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci'
           },
         presentation_name: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci'
           },
           
         rtl: {

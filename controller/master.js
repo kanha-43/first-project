@@ -41,7 +41,7 @@ const Macros_Action=db.macros_action
 
 const Organization_Field_custom=db.organization_field_custom
 
-const Tags_Keys=db.tags_keys
+//const Tags_Keys=db.tags_keys
 
 const Dynamic_Content_Variants=db.dynamic_content_variants
 
@@ -50,6 +50,8 @@ const Schedules_Intervals=db.schedules_intervals
 const Trigger_Action=db.trigger_action
 const Trigger_Cond_all=db.trigger_cond_all
 const Trigger_Cond_any=db.trigger_cond_any
+const Trigger_action_notification_user_grp=db.trigger_action_notification_user_grp
+const Trigger_action_notification_webhook=db.trigger_action_notification_webhook
 
 const Sla_filter_all=db.sla_filter_all
 const Sla_filter_any=db.sla_filter_any
@@ -169,9 +171,6 @@ exports.createBulkData=async(req,res)=>{
          title:item.title,
          active:item.active,
          default:item.default,
-         actions:item.actions,
-        'conditions.all':item.conditions.all,
-        'conditions.any':item.conditions.any,
          description:item.description,
          position:item.position,
          raw_title:item.raw_title,
@@ -316,7 +315,52 @@ exports.createTriggerBulk=async(req,res)=>{
   //console.log(values3)
  await Trigger_Cond_any.bulkCreate(values3)
 
- res.status(200).send("Bulk insertion completed for all 4 tables .")
+ //res.status(200).send("Bulk insertion completed for all 4 tables .")
+
+ const values4=req.body.triggers.map((item)=>
+        item.actions.map((innerItem)=>{
+        if(innerItem.field==="notification_user" || innerItem.field==="notification_group"){
+               return[{action_id:item.id,
+                    
+                    email_usertype:innerItem.value[0],
+                    email_subject:innerItem.value[1],
+                    email_body:innerItem.value[2]}
+               ]
+                
+    }
+    
+}).flat()  
+    ).flat().filter(value=>value!==undefined)
+
+    await Trigger_action_notification_user_grp.bulkCreate(values4)
+
+    const values5=req.body.triggers.map((item)=>
+        item.actions.map((innerItem)=>{
+        if(innerItem.field==="notification_webhook"){
+               return[{    
+                action_id:item.id,
+                webhook_id:innerItem.value[0],
+                webhook_table:innerItem.value[1]
+                }
+               ]
+                
+    }
+    
+}).flat() 
+  
+    ).flat().filter(value=>value!==undefined)
+
+    await Trigger_action_notification_webhook.bulkCreate(values5)
+
+    res.status(201).json({
+        Message:"Data added",
+        data1:values5,
+        /* data2:newActionData,
+        data3:newCollectionAll,
+        data4:newCollectionAny */
+
+    })
+
 }
 //1
 exports.createTagsBulk=async(req,res)=>{

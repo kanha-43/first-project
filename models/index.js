@@ -8,7 +8,10 @@ const {Sequelize, DataTypes}=require("sequelize");
   const sequelize = new Sequelize("ZD_DB","controller","6pxKCmdj3ZE9pP3ZwP2q",{
     host: 'tecrivuletmysqldev.cs5arscht7ca.us-east-1.rds.amazonaws.com',
     logging:false,
-    dialect: "mysql"
+    dialect: "mysql",
+    /* charset: 'utf8mb4',
+    collate: 'utf8mb4_general_ci' */
+
   })
 
   try {
@@ -55,7 +58,7 @@ db.macros_action=require('./macros_action')(sequelize,DataTypes)
 
 db.organization_field_custom=require("./organization_field_custom")(sequelize,DataTypes)
 
-db.tags_keys=require("./tags_keys")(sequelize,DataTypes)
+//db.tags_keys=require("./tags_keys")(sequelize,DataTypes)
 
 db.dynamic_content_variants=require('./dynamic_content_variants')(sequelize,DataTypes)
 
@@ -65,6 +68,8 @@ db.schedules_intervals=require("./schedules_intervals")(sequelize,DataTypes)
 db.trigger_action=require('./trigger_action')(sequelize,DataTypes)
 db.trigger_cond_all=require('./trigger_cond_all')(sequelize,DataTypes)
 db.trigger_cond_any=require('./trigger_cond_any')(sequelize,DataTypes)
+db.trigger_action_notification_user_grp=require('./trigger_action_notification_user')(sequelize,DataTypes)
+db.trigger_action_notification_webhook=require('./trigger_action_notification_webhook')(sequelize,DataTypes)
 
 db.sla_filter_all=require('./sla_filter_all')(sequelize,DataTypes)
 db.sla_filter_any=require('./sla_filter_any')(sequelize,DataTypes)
@@ -79,6 +84,13 @@ db.ticket_form_agent_child=require('./ticket_form_agent_condn_child_field')(sequ
 
 //main master
 db.main_master=require('./main_master')(sequelize,DataTypes)
+
+/* db.sequelize.define({
+  // Prevent Sequelize from altering existing tables
+  freezeTableName: true,
+  // Prevent Sequelize from adding timestamps to tables
+  //timestamps: false,
+}) */
 
 db.sequelize.sync({
     /* force:true */

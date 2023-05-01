@@ -15,10 +15,10 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: true
           },
-        intervals: {
+        /* intervals: {
             type: DataTypes.JSON,
             allowNull: true
-          },
+          }, */
          
       }, {
         sequelize,

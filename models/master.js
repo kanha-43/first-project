@@ -22,18 +22,6 @@ const Master = sequelize.define('Master', {
     type: DataTypes.BOOLEAN,
     allowNull: true
   },
-  actions: {
-    type: DataTypes.JSON,
-    allowNull: true
-  },
-  'conditions.all': {
-    type: DataTypes.JSON,
-    allowNull: true 
-  },
-  'conditions.any': {
-    type: DataTypes.JSON,
-    allowNull: true
-  },
   description: {
     type: DataTypes.STRING,
     allowNull: true

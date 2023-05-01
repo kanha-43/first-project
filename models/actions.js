@@ -14,10 +14,10 @@ const Action = sequelize.define('Action', {
       type: DataTypes.STRING,
       allowNull: true
     },
-    value: {
+    /* value: {
         type: DataTypes.JSON,
         allowNull: true
-      }
+      } */
   }, {
     sequelize,
     tableName: 'action',
