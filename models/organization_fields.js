@@ -51,10 +51,10 @@ module.exports=(sequelize,DataTypes)=>{
         type: DataTypes.STRING,
         allowNull: true
       },
-      custom_field_options:{
+      /* custom_field_options:{
         type: DataTypes.JSON,
         allowNull: true
-      }
+      } */
       
       
     }, {

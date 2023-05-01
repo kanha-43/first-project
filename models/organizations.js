@@ -47,10 +47,23 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.JSON,
             allowNull: true
           },
-        organization_fields:{
-            type:DataTypes.JSON,
+          org_fields_in_contract:{
+            type:DataTypes.STRING,
             allowNull: true
-        }
+        },
+        org_fields_product_type:{
+          type:DataTypes.STRING,
+          allowNull: true
+      },
+      org_fields_purchase_date:{
+          type:DataTypes.STRING,
+          allowNull: true
+      },
+      org_fields_support_type:{
+          type:DataTypes.STRING,
+          allowNull: true
+      }
+
         
       }, {
         sequelize,

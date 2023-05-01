@@ -15,8 +15,8 @@ module.exports=(sequelize,DataTypes)=>{
           allowNull: true
         },
         value: {
-            type: DataTypes.JSON,
-            allowNull: true
+          type: DataTypes.STRING,
+          allowNull: true
           }
       }, {
         sequelize,

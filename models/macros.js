@@ -30,10 +30,7 @@ module.exports=(sequelize,DataTypes)=>{
         type: DataTypes.STRING,
         allowNull: true
       }, 
-      actions: {
-        type: DataTypes.JSON,
-        allowNull: true
-      },
+     
       restriction: {
         type: DataTypes.STRING,
         allowNull: true

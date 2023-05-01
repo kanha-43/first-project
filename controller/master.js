@@ -41,7 +41,7 @@ const Macros_Action=db.macros_action
 
 const Organization_Field_custom=db.organization_field_custom
 
-const Tags_Keys=db.tags_keys
+//const Tags_Keys=db.tags_keys
 
 const Dynamic_Content_Variants=db.dynamic_content_variants
 
@@ -50,6 +50,8 @@ const Schedules_Intervals=db.schedules_intervals
 const Trigger_Action=db.trigger_action
 const Trigger_Cond_all=db.trigger_cond_all
 const Trigger_Cond_any=db.trigger_cond_any
+const Trigger_action_notification_user_grp=db.trigger_action_notification_user_grp
+const Trigger_action_notification_webhook=db.trigger_action_notification_webhook
 
 const Sla_filter_all=db.sla_filter_all
 const Sla_filter_any=db.sla_filter_any
@@ -169,9 +171,6 @@ exports.createBulkData=async(req,res)=>{
          title:item.title,
          active:item.active,
          default:item.default,
-         actions:item.actions,
-        'conditions.all':item.conditions.all,
-        'conditions.any':item.conditions.any,
          description:item.description,
          position:item.position,
          raw_title:item.raw_title,
@@ -270,17 +269,18 @@ exports.createTriggerBulk=async(req,res)=>{
         title:item.title,
         active:item.active,
         default:item.default,
-        actions:item.actions,
+        /* actions:item.actions,
        'conditions.all':item.conditions.all,
-       'conditions.any':item.conditions.any,
+       'conditions.any':item.conditions.any, */
         description:item.description,
         position:item.position,
         raw_title:item.raw_title,
         category_id:item.category_id
    }))
+//console.log(values)
    await Triggers.bulkCreate(values)
    const values1=req.body.triggers.map((item)=>{
-    const temp= item.actions.map((innerItem)=>({
+    const temp= item.actions?.map((innerItem)=>({
          action_id:item.id,
          field:innerItem.field,
          value:innerItem.value,
@@ -289,21 +289,22 @@ exports.createTriggerBulk=async(req,res)=>{
  }).flat()
  
  await Trigger_Action.bulkCreate(values1)
+ //console.log(values1)
 
  const values2=req.body.triggers.map((item)=>{
-     const temp= item.conditions.all.map((innerItem)=>({
+     const temp= item.conditions.all?.map((innerItem)=>({
          condition_all_id:item.id,
           field:innerItem.field,
-          operator:innerItem.opertor,
+          operator:innerItem.operator,
           value:innerItem.value,
       }))
       return temp
   }).flat()
 
  await Trigger_Cond_all.bulkCreate(values2)
-
+//console.log(values2)
  const values3=req.body.triggers.map((item)=>{
-     const temp= item.conditions.any.map((innerItem)=>({
+     const temp= item.conditions.any?.map((innerItem)=>({
          condition_any_id:item.id,
           field:innerItem.field,
           operator:innerItem.operator,
@@ -311,9 +312,55 @@ exports.createTriggerBulk=async(req,res)=>{
       }))
       return temp
   }).flat()
+  //console.log(values3)
  await Trigger_Cond_any.bulkCreate(values3)
 
- res.status(200).send("Bulk insertion completed for all 4 tables .")
+ //res.status(200).send("Bulk insertion completed for all 4 tables .")
+
+ const values4=req.body.triggers.map((item)=>
+        item.actions.map((innerItem)=>{
+        if(innerItem.field==="notification_user" || innerItem.field==="notification_group"){
+               return[{action_id:item.id,
+                    
+                    email_usertype:innerItem.value[0],
+                    email_subject:innerItem.value[1],
+                    email_body:innerItem.value[2]}
+               ]
+                
+    }
+    
+}).flat()  
+    ).flat().filter(value=>value!==undefined)
+
+    await Trigger_action_notification_user_grp.bulkCreate(values4)
+
+    const values5=req.body.triggers.map((item)=>
+        item.actions.map((innerItem)=>{
+        if(innerItem.field==="notification_webhook"){
+               return[{    
+                action_id:item.id,
+                webhook_id:innerItem.value[0],
+                webhook_table:innerItem.value[1]
+                }
+               ]
+                
+    }
+    
+}).flat() 
+  
+    ).flat().filter(value=>value!==undefined)
+
+    await Trigger_action_notification_webhook.bulkCreate(values5)
+
+    res.status(201).json({
+        Message:"Data added",
+        data1:values5,
+        /* data2:newActionData,
+        data3:newCollectionAll,
+        data4:newCollectionAny */
+
+    })
+
 }
 //1
 exports.createTagsBulk=async(req,res)=>{
@@ -324,7 +371,7 @@ exports.createTagsBulk=async(req,res)=>{
    }))
    await Tags.bulkCreate(values)
 
-   const values1=req.body.tags.map((item)=>{
+   /* const values1=req.body.tags.map((item)=>{
     const temp= item.actions.map((innerItem)=>({
          
          name:innerItem.name,
@@ -333,7 +380,7 @@ exports.createTagsBulk=async(req,res)=>{
      return temp
  }).flat()
  
- await Tags_Keys.bulkCreate(values1)
+ await Tags_Keys.bulkCreate(values1) */
  res.status(200).send("Bulk insertion completed for all tables .")
 
 }
@@ -350,6 +397,7 @@ exports.createGroupBulk=async(req,res)=>{
        
    }))
    await Groups.bulkCreate(values)
+   res.status(201).send("sent successfully..")
 }
 //3
 exports.createLocalesBulk=async(req,res)=>{
@@ -396,15 +444,13 @@ exports.createBrandsBulk=async(req,res)=>{
         subdomain:item.subdomain,
         host_mapping:item.host_mapping,
         has_help_center:item.has_help_center,
-        has_help_state:item.has_help_state,
+        help_center_state:item.help_center_state,
         active:item.active,
         default:item.default,
         is_deleted:item.is_deleted,
         logo:item.logo,
         ticket_form_ids:item.ticket_form_ids,
         signature_template:item.signature_template,
-
-
        
    }))
    await Brands.bulkCreate(values)
@@ -561,13 +607,8 @@ exports.createAutomationsBulk=async(req,res)=>{
         title:item.title,
         active:item.active,
         default:item.default,
-        actions:item.actions,
-       'conditions.all':item.conditions.all,
-       'conditions.any':item.conditions.any,
-        
         position:item.position,
         raw_title:item.raw_title,
-
 
        
    }))
@@ -623,7 +664,7 @@ const { valuenew1, valuenew2 } = req.body.automations.reduce((acc, item) => {
      const temp= item.conditions.all.map((innerItem)=>({
          condition_all_id:item.id,
           field:innerItem.field,
-          operator:innerItem.opertor,
+          operator:innerItem.operator,
           value:innerItem.value,
       }))
       return temp
@@ -801,10 +842,10 @@ exports.createOrganizationFieldsBulk=async(req,res)=>{
         custom_field_options:item.custom_field_options
        
    }))
-   await Organization_fields.bulkCreate(values)
+   //await Organization_fields.bulkCreate(values)
 
     const values1=req.body.organization_fields.map((item)=>{
-    const temp= item.custom_field_options?.map((innerItem)=>({
+    const temp= item?.custom_field_options?.map((innerItem)=>({
         custom_field_id:item.id,
         id:innerItem.id,
         name:innerItem.name,
@@ -813,7 +854,9 @@ exports.createOrganizationFieldsBulk=async(req,res)=>{
      }))
      return temp
  }).flat()
-await Organization_Field_custom.bulkCreate(values1)
+ console.log(values)
+ console.log(values1)
+//await Organization_Field_custom.bulkCreate(values1)
 
 res.status(200).send("Bulk insertion completed for all tables .")
 
@@ -831,10 +874,15 @@ exports.createOrganizationsBulk=async(req,res)=>{
         notes:item.notes,
         group_id:item.group_id,
         tags:item.tags,
-        organization_fields:item.organization_fields,
+        org_fields_in_contract:item.organization_fields['in_contract'],
+		org_fields_product_type: item.organization_fields['product_type'],
+		org_fields_purchase_date: item.organization_fields['purchase_date'],
+		org_fields_support_type: item.organization_fields['support_type']
        
    }))
+   //console.log(values)
    await Organisations.bulkCreate(values)
+   res.status(201).send("created...")
 }
 
 exports.createTicketMasterBulk=async(req,res)=>{
@@ -977,6 +1025,26 @@ exports.deleteData=async(req,res)=>{
     res.status(200).json({
         Message:"data with the given id deleted"
     })
+    
+}
+exports.deleteBulk=async(req,res)=>{
+    await Locales.destroy({
+        where: {}
+      })
+    /* await Trigger_Cond_all.destroy({
+        where: {}
+      })
+    await Trigger_Cond_any.destroy({
+        where: {}
+      })
+    await Triggers.destroy({
+        where: {}
+      }) */.then(d => {
+        res.status(200).json({
+            Message:"data with the given id deleted"
+        })
+      })
+    
 }
 
 /* ["01G4F655S4EXKNA6DXMJ7V6PDK",

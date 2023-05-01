@@ -22,7 +22,7 @@ module.exports=(sequelize,DataTypes)=>{
         type: DataTypes.BOOLEAN,
         allowNull: true
       },
-      actions: {
+      /* actions: {
         type: DataTypes.JSON,
         allowNull: true
       },
@@ -33,7 +33,7 @@ module.exports=(sequelize,DataTypes)=>{
       'conditions.any': {
         type: DataTypes.JSON,
         allowNull: true
-      },
+      }, */
       position: {
         type: DataTypes.INTEGER,
         allowNull: true

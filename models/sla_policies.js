@@ -25,7 +25,7 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.INTEGER,
             allowNull: true
           },
-          'filter.all': {
+          /* 'filter.all': {
             type: DataTypes.JSON,
             allowNull: true 
           },
@@ -36,7 +36,7 @@ module.exports=(sequelize,DataTypes)=>{
           policy_metrics:{
             type: DataTypes.JSON,
             allowNull: true
-          },
+          }, */
         
         
         

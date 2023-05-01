@@ -27,10 +27,7 @@ module.exports=(sequelize,DataTypes)=>{
             allowNull: true
           },
           
-        variants: {
-            type: DataTypes.JSON,
-            allowNull: true
-          },
+        
          
       }, {
         sequelize,
