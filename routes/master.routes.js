@@ -1,17 +1,23 @@
 const express =require("express")
 const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk, createMainMaster, createTicketFormBulk, deleteBulk}=require("../controller/master");
-const { readBrandData, readGroupData, readMainMasterData, readBrandID, readConditionAllData } = require("../controller/read");
+const { readBrandData, readGroupData, readMainMasterData, readBrandID, readConditionAllData, readBrandIdbyID, readBrandByName, readMainMaster_obr, readMainMaster_vbr, readAction } = require("../controller/read");
 
 const router = express.Router();
 
 //read data
 router.get("/getbrands",readBrandData)
 router.get('/getgroups',readGroupData)
+
+router.get('/getmaster',readMainMasterData)
+router.get('/getaction',readAction)
+
+
 /*  */
 router.post('/insert', createData);
 router.post('/bulkadd',createBulkData)
 router.get('/getbrandid',readBrandID)
 router.get('/getcond',readConditionAllData)
+router.post('/getbrandbyname',readBrandByName)
 
 //17 tables
 router.post('/supportemail',createSupportEmailAddressBulk)
@@ -39,10 +45,10 @@ router.post("/main",createMainMaster)
 //delete
 router.delete("/bulkdel",deleteBulk)
 
-router.get('/getmaster/:name',readMainMasterData)
-
 router.get('/:id',getData );
 router.delete('/delete/:id',deleteData );
-
+router.post('/brandidbyticketid/:id',readBrandIdbyID)
+router.get('/getmasterobr/:fb',readMainMaster_obr)
+router.get('/getmastervbr/:op/:fb',readMainMaster_vbr)
 
 module.exports = router;

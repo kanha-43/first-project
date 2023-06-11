@@ -1,18 +1,18 @@
 const {Sequelize, DataTypes}=require("sequelize");
 
-/* const sequelize = new Sequelize('assignment', 'root', 'root', {
+const sequelize = new Sequelize('assignment', 'root', 'root', {
     host: 'localhost',
     logging:false,
     dialect: "mysql" // one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' 
-  }); */
-  const sequelize = new Sequelize("ZD_DB","controller","6pxKCmdj3ZE9pP3ZwP2q",{
+  });
+  /* const sequelize = new Sequelize("ZD_DB","controller","6pxKCmdj3ZE9pP3ZwP2q",{
     host: 'tecrivuletmysqldev.cs5arscht7ca.us-east-1.rds.amazonaws.com',
     logging:false,
-    dialect: "mysql",
+    dialect: "mysql", */
     /* charset: 'utf8mb4',
     collate: 'utf8mb4_general_ci' */
 
-  })
+ // })
 
   try {
     sequelize.authenticate();

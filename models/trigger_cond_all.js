@@ -19,6 +19,10 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: true
           },
+        field_id: {
+            type: DataTypes.BIGINT,
+            allowNull: true
+              },
         operator: {
             type: DataTypes.STRING,
             allowNull: true
@@ -26,7 +30,8 @@ module.exports=(sequelize,DataTypes)=>{
         value: {
             type: DataTypes.STRING,
             allowNull: true
-            }
+            },
+          
       }, {
         sequelize,
         tableName: 'trigger_cond_all',
