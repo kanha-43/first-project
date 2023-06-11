@@ -14,10 +14,19 @@ module.exports=(sequelize,DataTypes)=>{
           type: DataTypes.STRING,
           allowNull: true
         },
+        field_id:{
+          type: DataTypes.BIGINT,
+          allowNull: true
+        },
         value: {
             type: DataTypes.JSON,
             allowNull: true
-          }
+          },
+        value_extract: {
+            type: DataTypes.STRING,
+            allowNull: true
+          },
+          
       }, {
         sequelize,
         tableName: 'macros_action',

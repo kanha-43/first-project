@@ -218,8 +218,8 @@ exports.createBulkData=async(req,res)=>{
     const values4=req.body.targets.map((item)=>
         item.actions.map((innerItem)=>{
         if(innerItem.field==="notification_user" || innerItem.field==="notification_group"){
-               return[{action_id:item.id,
-                    
+               return[
+                    {action_id:item.id,
                     email_usertype:innerItem.value[0],
                     email_subject:innerItem.value[1],
                     email_body:innerItem.value[2]}
@@ -278,7 +278,7 @@ exports.createTriggerBulk=async(req,res)=>{
         category_id:item.category_id
    }))
 //console.log(values)
-   await Triggers.bulkCreate(values)
+   //await Triggers.bulkCreate(values)
    const values1=req.body.triggers.map((item)=>{
     const temp= item.actions?.map((innerItem)=>({
          action_id:item.id,
@@ -288,23 +288,30 @@ exports.createTriggerBulk=async(req,res)=>{
      return temp
  }).flat()
  
- await Trigger_Action.bulkCreate(values1)
+ //await Trigger_Action.bulkCreate(values1)
  //console.log(values1)
 
- const values2=req.body.triggers.map((item)=>{
-     const temp= item.conditions.all?.map((innerItem)=>({
+const values2=req.body.triggers.map((item)=>{
+    let regex = /\d+/g;
+    const temp= item.conditions.all?.map((innerItem)=>{
+    const field_id_match = innerItem.field.match(regex); // extract numeric values
+    const field_id = field_id_match ? parseInt(field_id_match[0]) : null; // get first value or null
+    return {
          condition_all_id:item.id,
           field:innerItem.field,
+        field_id:field_id,
           operator:innerItem.operator,
           value:innerItem.value,
-      }))
+          //value_extract: innerItem.value.replace(/\n\n\n/g, "   ").replace(/\n\n/g, "  ").replace(/\n/g, " ").replace(/<\/?[^>]+>/gi, "")
+          //value_extract: innerItem.value.replace(/\n\n\n/g, "   ").replace(/\n\n/g, "  ").replace(/\n/g, " ").replace(/<\/?[^>]+>/gi, "")
+}})
       return temp
   }).flat()
 
- await Trigger_Cond_all.bulkCreate(values2)
+await Trigger_Cond_all.bulkCreate(values2)
 //console.log(values2)
- const values3=req.body.triggers.map((item)=>{
-     const temp= item.conditions.any?.map((innerItem)=>({
+const values3=req.body.triggers.map((item)=>{
+    const temp= item.conditions.any?.map((innerItem)=>({
          condition_any_id:item.id,
           field:innerItem.field,
           operator:innerItem.operator,
@@ -313,7 +320,7 @@ exports.createTriggerBulk=async(req,res)=>{
       return temp
   }).flat()
   //console.log(values3)
- await Trigger_Cond_any.bulkCreate(values3)
+ //await Trigger_Cond_any.bulkCreate(values3)
 
  //res.status(200).send("Bulk insertion completed for all 4 tables .")
 
@@ -332,7 +339,7 @@ exports.createTriggerBulk=async(req,res)=>{
 }).flat()  
     ).flat().filter(value=>value!==undefined)
 
-    await Trigger_action_notification_user_grp.bulkCreate(values4)
+   // await Trigger_action_notification_user_grp.bulkCreate(values4)
 
     const values5=req.body.triggers.map((item)=>
         item.actions.map((innerItem)=>{
@@ -350,7 +357,7 @@ exports.createTriggerBulk=async(req,res)=>{
   
     ).flat().filter(value=>value!==undefined)
 
-    await Trigger_action_notification_webhook.bulkCreate(values5)
+    //await Trigger_action_notification_webhook.bulkCreate(values5)
 
     res.status(201).json({
         Message:"Data added",
@@ -489,7 +496,7 @@ exports.createDynamicContentBulk=async(req,res)=>{
         variants:item.variants
       
    }))
-   await Dynamic_Content.bulkCreate(values)
+   //await Dynamic_Content.bulkCreate(values)
 
    const values1=req.body.items.map((item)=>{
     const temp= item.variants.map((innerItem)=>({ 
@@ -702,16 +709,26 @@ exports.createMacrosBulk=async(req,res)=>{
 
        
    }))
-   await Macros.bulkCreate(values)
-   const values1=req.body.macros.map((item)=>{
-    const temp= item.actions.map((innerItem)=>({
-         action_id:item.id,
-         field:innerItem.field,
-         value:innerItem.value,
-     }))
+    //await Macros.bulkCreate(values)
+    let regex = /\d+/g;
+    const values1=req.body.macros.map((item)=>{
+        const temp = item.actions.map((innerItem) => {
+            const field_id_match = innerItem.field.match(regex); // extract numeric values
+            const field_id = field_id_match ? parseInt(field_id_match[0]) : null; // get first value or null
+            return {
+              action_id: item.id,
+              //field: innerItem.field.replace(regex, ""),
+              field: innerItem.field,
+              field_id: field_id,
+              value: innerItem.value,
+              value_extract: innerItem.value.replace(/\n\n\n/g, "   ").replace(/\n\n/g, "  ").replace(/\n/g, " ").replace(/<\/?[^>]+>/gi, "")
+              
+            };
+          });
      return temp
  }).flat()
- await Macros_Action.bulkCreate(values1)
+await Macros_Action.bulkCreate(values1)
+//console.log(values1)
  res.status(201).send("record added successfully...")
  
 }

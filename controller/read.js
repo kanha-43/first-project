@@ -1,19 +1,78 @@
+
 const db=require('../models')
 const Brands=db.brands;
 const Groups=db.groups;
 const MainMaster=db.main_master
 const Conditions_all=db.condition_all
+const Action=db.action
+
+const { Sequelize ,Op} = require('sequelize');
 
 exports.readBrandData=async(req,res)=>{
     await Brands.findAll({attributes:['name']})
         .then(rows => {
           // `rows` contains an array of objects with only the `column1` property
-          res.status(200).send(rows)
+          // case 1 
+         res.status(200).send(rows)
+          // case 2
+          //res.status(200).send(rows[0].name)
+          
         })
         .catch(err => {
           console.error(err);
         });
+       
+       /*  await Brands.findAll({attributes:['ticket_form_ids']}).then(rows=>{
+           // case 3 
+          //res.status(200).send(rows)
+          //  case 4 
+          //const jsonData=JSON.parse(rows[0].ticket_form_ids)
+          //res.status(200).send({"data":rows[0].ticket_form_ids[0]})
+        }) */
+        
+
 }
+exports.readBrandIdbyID=async(req,res)=>{
+  const id=req.params.id
+
+  const data= await Brands.findAll({}).then(rows=>{
+          
+    //res.status(200).send(rows)
+    return rows
+
+  })
+  
+  const val=data.map((item,index)=>{
+    let ourBrandID=item.id
+    
+    //const jsonIDs=JSON.parse(item.ticket_form_ids)
+    
+    const temp=item.ticket_form_ids.map((innerItem,index)=>{
+        if(id==innerItem){
+          return ourBrandID
+        } 
+    })
+    
+    return temp
+  }).flat().filter(value=>value!==undefined)
+
+  res.status(200).send(val)
+}
+
+exports.readBrandByName=async(req,res)=>{
+  let id;
+      await Brands.findAll({where:{name:req.body.name}})
+          .then(rows => {
+            console.log(req.body.name)
+            res.status(200).send(rows)
+          })
+          .catch(err => {
+            console.error(err);
+          });
+        
+        }
+
+
 exports.readBrandID=async(req,res)=>{
   let id;
       await Brands.findAll({attributes:['id'], where:{name:req.body.name}})
@@ -38,13 +97,13 @@ exports.readBrandID=async(req,res)=>{
         //console.log(columnAValues);
         res.status(200).send(columnValues)
       })
-      await Conditions_all.findOne({
+      /* await Conditions_all.findOne({
         where: {
           column_b: {
             [Op.contains]: [searchValue]
           }
         }
-      })
+      }) */
 }
 exports.readGroupData=async(req,res)=>{
     await Groups.findAll({attributes:['name']})
@@ -69,8 +128,69 @@ exports.readConditionAllData=async(req,res)=>{
 }
 
 exports.readMainMasterData=async(req,res)=>{
-  const paramTable=req.params.name
-  await MainMaster.findAll({where:{Field_Business_Name:paramTable}})
+  //const paramTable=req.params.name
+  await MainMaster.findAll({/* where:{Field_Business_Name:paramTable} */
+  attributes: [
+    [Sequelize.fn('DISTINCT', Sequelize.col('Field_Business_Name')), 'name'],
+  ],
+  })
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
+exports.readMainMaster_obr=async(req,res)=>{
+  //const paramTable=req.params.name
+  const fb=req.params.fb
+  await MainMaster.findAll({/* where:{Field_Business_Name:paramTable} */
+  attributes: [
+    [Sequelize.fn('DISTINCT', Sequelize.col('Operator_business_reference')), 'name'],
+  ],
+  where:{Field_Business_Name:fb}
+  })
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
+
+exports.readMainMaster_vbr=async(req,res)=>{
+  const op=req.params.op
+  const fb=req.params.fb
+  //const paramTable=req.params.name  Value_Business_reference
+  await MainMaster.findAll({/* where:{Field_Business_Name:paramTable} */
+  attributes: [
+    [Sequelize.fn('DISTINCT', Sequelize.col('Value_Business_reference')), 'name'],
+  ],
+  where: {
+    [Op.and]:[
+    {Operator_business_reference: op},
+     {Field_Business_Name:fb}
+    ]
+  },
+  })
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
+
+exports.readAction=async(req,res)=>{
+  //const paramTable=req.params.name
+  await Action.findAll({/* where:{Field_Business_Name:paramTable} */
+  attributes: [
+    [Sequelize.fn('DISTINCT', Sequelize.col('field')), 'name'],
+  ],
+  })
       .then(rows => {
         // `rows` contains an array of objects with only the `column1` property
         res.status(200).send(rows)
