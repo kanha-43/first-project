@@ -57,8 +57,13 @@ const Sla_filter_all=db.sla_filter_all
 const Sla_filter_any=db.sla_filter_any
 const Sla_policy_metrics=db.sla_policy_metrics
 
+
 //Main master table 
 const Master_main=db.main_master
+
+//Main Master Action
+const Master_main_action=db.main_master_action
+
 
 exports.getData=async(req,res)=>{
     const{id}=req.params;
@@ -1019,6 +1024,20 @@ exports.createMainMaster=async(req,res)=>{
     await Master_main.bulkCreate(values)
     res.status(200).send("Bulk insertion successful..")
 }
+
+exports.createMainMasterAction=async(req,res)=>{
+    const values=req.body.main.map(item=>({
+        Criteria_ID:item.Criteria_ID,
+        Field_Business_Name:item.Field_Business_Name,
+        Value_Business_reference:item.Value_Business_reference,
+        Conditions_API_Name:item.Conditions_API_Name,
+        Value_API_reference:item.Value_API_reference,
+        field6:item.field6
+    }))
+    await Master_main_action.bulkCreate(values)
+    res.status(200).send("Bulk insertion successful..")
+}
+
 /* exports.createAutomationActionBulksync=async(req,res)=>{
     const values=req.body.master.map(item=>({
         

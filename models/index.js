@@ -85,6 +85,8 @@ db.ticket_form_agent_child=require('./ticket_form_agent_condn_child_field')(sequ
 //main master
 db.main_master=require('./main_master')(sequelize,DataTypes)
 
+//main master action
+db.main_master_action=require('./main_master_action')(sequelize,DataTypes)
 /* db.sequelize.define({
   // Prevent Sequelize from altering existing tables
   freezeTableName: true,
@@ -98,4 +100,192 @@ db.sequelize.sync({
    alter: true,
     force: false,
   })
+  [
+    {
+      "Conditions_API_Name": "locale_id"
+    },
+    {
+      "Conditions_API_Name": "locale_id"
+    },
+    {
+      "Conditions_API_Name": "organization.custom_fields.support_type"
+    },
+    {
+      "Conditions_API_Name": "organization.custom_fields.support_type"
+    },
+    {
+      "Conditions_API_Name": "organization.custom_fields.support_type"
+    },
+    {
+      "Conditions_API_Name": "organization.custom_fields.support_type"
+    },
+    {
+      "Conditions_API_Name": "assignee_id"
+    },
+    {
+      "Conditions_API_Name": "assignee_id"
+    },
+    {
+      "Conditions_API_Name": "assignee_id"
+    },
+    {
+      "Conditions_API_Name": "assignee_id"
+    },
+    {
+      "Conditions_API_Name": "ticket_form_id"
+    },
+    {
+      "Conditions_API_Name": "ticket_form_id"
+    },
+    {
+      "Conditions_API_Name": "group_id"
+    },
+    {
+      "Conditions_API_Name": "group_id"
+    },
+    {
+      "Conditions_API_Name": "type"
+    },
+    {
+      "Conditions_API_Name": "type"
+    },
+    {
+      "Conditions_API_Name": "type"
+    },
+    {
+      "Conditions_API_Name": "type"
+    },
+    {
+      "Conditions_API_Name": "type"
+    },
+    {
+      "Conditions_API_Name": "priority"
+    },
+    {
+      "Conditions_API_Name": "priority"
+    },
+    {
+      "Conditions_API_Name": "priority"
+    },
+    {
+      "Conditions_API_Name": "priority"
+    },
+    {
+      "Conditions_API_Name": "priority"
+    },
+    {
+      "Conditions_API_Name": "status"
+    },
+    {
+      "Conditions_API_Name": "status"
+    },
+    {
+      "Conditions_API_Name": "status"
+    },
+    {
+      "Conditions_API_Name": "status"
+    },
+    {
+      "Conditions_API_Name": "status"
+    },
+    {
+      "Conditions_API_Name": "status"
+    },
+    {
+      "Conditions_API_Name": "satisfaction_score"
+    },
+    {
+      "Conditions_API_Name": "set_tags"
+    },
+    {
+      "Conditions_API_Name": "set_tags"
+    },
+    {
+      "Conditions_API_Name": "current_tags"
+    },
+    {
+      "Conditions_API_Name": "current_tags"
+    },
+    {
+      "Conditions_API_Name": "remove_tags"
+    },
+    {
+      "Conditions_API_Name": "remove_tags"
+    },
+    {
+      "Conditions_API_Name": ""
+    },
+    {
+      "Conditions_API_Name": "follower"
+    },
+    {
+      "Conditions_API_Name": "set_schedule"
+    },
+    {
+      "Conditions_API_Name": "notification_user"
+    },
+    {
+      "Conditions_API_Name": "notification_user"
+    },
+    {
+      "Conditions_API_Name": "notification_user"
+    },
+    {
+      "Conditions_API_Name": "notification_user"
+    },
+    {
+      "Conditions_API_Name": "notification_user"
+    },
+    {
+      "Conditions_API_Name": "notification_user"
+    },
+    {
+      "Conditions_API_Name": "notification_group"
+    },
+    {
+      "Conditions_API_Name": "notification_group"
+    },
+    {
+      "Conditions_API_Name": "notification_webhook"
+    },
+    {
+      "Conditions_API_Name": ""
+    },
+    {
+      "Conditions_API_Name": "brand_id"
+    },
+    {
+      "Conditions_API_Name": "custom_fields_7375500650775"
+    },
+    {
+      "Conditions_API_Name": "custom_fields_1900001921265"
+    },
+    {
+      "Conditions_API_Name": "custom_fields_1900001921265"
+    },
+    {
+      "Conditions_API_Name": "requester.custom_fields.social_messaging_user_info"
+    },
+    {
+      "Conditions_API_Name": "requester.custom_fields.social_messaging_user_info"
+    },
+    {
+      "Conditions_API_Name": "requester.custom_fields.social_messaging_user_info"
+    },
+    {
+      "Conditions_API_Name": "requester.custom_fields.user_language"
+    },
+    {
+      "Conditions_API_Name": "requester.custom_fields.user_language"
+    },
+    {
+      "Conditions_API_Name": "requester.custom_fields.whatsapp"
+    },
+    {
+      "Conditions_API_Name": "requester.custom_fields.whatsapp"
+    }
+  ]
+
 module.exports=db
+
+

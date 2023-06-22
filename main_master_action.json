@@ -1,0 +1,490 @@
+[
+  {
+    "Criteria_ID": "4",
+    "Field_Business_Name": "Language",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "locale_id",
+    "Value_API_reference": "66",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "4",
+    "Field_Business_Name": "Language",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "locale_id",
+    "Value_API_reference": "1",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "Custom Field",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "organization.custom_fields.support_type",
+    "Value_API_reference": "360003266734",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "Custom Field",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "organization.custom_fields.support_type",
+    "Value_API_reference": "360003266754",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "Custom Field",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "organization.custom_fields.support_type",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "Custom Field",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "organization.custom_fields.support_type",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Assignee",
+    "Value_Business_reference": "(current user)",
+    "Conditions_API_Name": "assignee_id",
+    "Value_API_reference": "current_user",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Assignee",
+    "Value_Business_reference": "(requester)",
+    "Conditions_API_Name": "assignee_id",
+    "Value_API_reference": "requester_id",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Assignee",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "assignee_id",
+    "Value_API_reference": "150835941565",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Assignee",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "assignee_id",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Form",
+    "Value_Business_reference": "(default form)",
+    "Conditions_API_Name": "ticket_form_id",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Form",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "ticket_form_id",
+    "Value_API_reference": "28985545346",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Group",
+    "Value_Business_reference": "-",
+    "Conditions_API_Name": "group_id",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Group",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "group_id",
+    "Value_API_reference": "6748445441",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Type",
+    "Value_Business_reference": "Incident",
+    "Conditions_API_Name": "type",
+    "Value_API_reference": "incident",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Type",
+    "Value_Business_reference": "Problem",
+    "Conditions_API_Name": "type",
+    "Value_API_reference": "problem",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Type",
+    "Value_Business_reference": "Question",
+    "Conditions_API_Name": "type",
+    "Value_API_reference": "question",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Type",
+    "Value_Business_reference": "Task",
+    "Conditions_API_Name": "type",
+    "Value_API_reference": "task",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Type",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "type",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "Priority",
+    "Value_Business_reference": "High",
+    "Conditions_API_Name": "priority",
+    "Value_API_reference": "high",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "Priority",
+    "Value_Business_reference": "Low",
+    "Conditions_API_Name": "priority",
+    "Value_API_reference": "low",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "Priority",
+    "Value_Business_reference": "Normal",
+    "Conditions_API_Name": "priority",
+    "Value_API_reference": "normal",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "Priority",
+    "Value_Business_reference": "Urgent",
+    "Conditions_API_Name": "priority",
+    "Value_API_reference": "urgent",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "Priority",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "priority",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "status",
+    "Value_Business_reference": "closed",
+    "Conditions_API_Name": "status",
+    "Value_API_reference": "closed",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "status",
+    "Value_Business_reference": "new",
+    "Conditions_API_Name": "status",
+    "Value_API_reference": "new",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "status",
+    "Value_Business_reference": "open",
+    "Conditions_API_Name": "status",
+    "Value_API_reference": "open",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "status",
+    "Value_Business_reference": "pending",
+    "Conditions_API_Name": "status",
+    "Value_API_reference": "pending",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "status",
+    "Value_Business_reference": "solved",
+    "Conditions_API_Name": "status",
+    "Value_API_reference": "solved",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "13",
+    "Field_Business_Name": "status",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "status",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Satisfaction",
+    "Value_Business_reference": "offered to requester",
+    "Conditions_API_Name": "satisfaction_score",
+    "Value_API_reference": "offered",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Set Tags",
+    "Value_Business_reference": "Single",
+    "Conditions_API_Name": "set_tags",
+    "Value_API_reference": "nupur",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Set Tags",
+    "Value_Business_reference": "multiple",
+    "Conditions_API_Name": "set_tags",
+    "Value_API_reference": "nupur girish",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Add Tags",
+    "Value_Business_reference": "Single",
+    "Conditions_API_Name": "current_tags",
+    "Value_API_reference": "nupur",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Add Tags",
+    "Value_Business_reference": "multiple",
+    "Conditions_API_Name": "current_tags",
+    "Value_API_reference": "nupur girish",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Remove Tags",
+    "Value_Business_reference": "Single",
+    "Conditions_API_Name": "remove_tags",
+    "Value_API_reference": "nupur",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Remove Tags",
+    "Value_Business_reference": "multiple",
+    "Conditions_API_Name": "remove_tags",
+    "Value_API_reference": "nupur girish",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Add CC",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "",
+    "Value_API_reference": "",
+    "field6": "Not found in UI"
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Add Follower",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "follower",
+    "Value_API_reference": "1511339744822",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "1",
+    "Field_Business_Name": "Set schedule",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "set_schedule",
+    "Value_API_reference": "360000410954",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email user",
+    "Value_Business_reference": "(requester)",
+    "Conditions_API_Name": "notification_user",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email user",
+    "Value_Business_reference": "(assignee)",
+    "Conditions_API_Name": "notification_user",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email user",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "notification_user",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email user",
+    "Value_Business_reference": "(current user)",
+    "Conditions_API_Name": "notification_user",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email user",
+    "Value_Business_reference": "(all non-restricted agents)",
+    "Conditions_API_Name": "notification_user",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email user",
+    "Value_Business_reference": "(requester and CCs)",
+    "Conditions_API_Name": "notification_user",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email group",
+    "Value_Business_reference": "(assigned group)",
+    "Conditions_API_Name": "notification_group",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Email group",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "notification_group",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Notify active webhook",
+    "Value_Business_reference": "text field",
+    "Conditions_API_Name": "notification_webhook",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "",
+    "Field_Business_Name": "Notify target",
+    "Value_Business_reference": "text field",
+    "Conditions_API_Name": "",
+    "Value_API_reference": "",
+    "field6": "Not found in UI"
+  },
+  {
+    "Criteria_ID": "10",
+    "Field_Business_Name": "Brand",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "brand_id",
+    "Value_API_reference": "82476578",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "12",
+    "Field_Business_Name": "Date",
+    "Value_Business_reference": "example date",
+    "Conditions_API_Name": "custom_fields_7375500650775",
+    "Value_API_reference": "2023-03-08",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "Gender",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "custom_fields_1900001921265",
+    "Value_API_reference": "6587464964",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "Gender",
+    "Value_Business_reference": "-",
+    "Conditions_API_Name": "custom_fields_1900001921265",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "11",
+    "Field_Business_Name": "Social Messaging User Info",
+    "Value_Business_reference": "example string",
+    "Conditions_API_Name": "requester.custom_fields.social_messaging_user_info",
+    "Value_API_reference": "user info",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "11",
+    "Field_Business_Name": "Social Messaging User Info",
+    "Value_Business_reference": "example words",
+    "Conditions_API_Name": "requester.custom_fields.social_messaging_user_info",
+    "Value_API_reference": "SingleWord",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "11",
+    "Field_Business_Name": "Social Messaging User Info",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "requester.custom_fields.social_messaging_user_info",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "User Language",
+    "Value_Business_reference": "Drop down selection",
+    "Conditions_API_Name": "requester.custom_fields.user_language",
+    "Value_API_reference": "360002915473",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "8",
+    "Field_Business_Name": "User Language",
+    "Value_Business_reference": "-",
+    "Conditions_API_Name": "requester.custom_fields.user_language",
+    "Value_API_reference": "",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "11",
+    "Field_Business_Name": "Whatsapp Phone Number",
+    "Value_Business_reference": "example digits",
+    "Conditions_API_Name": "requester.custom_fields.whatsapp",
+    "Value_API_reference": "9810430999",
+    "field6": ""
+  },
+  {
+    "Criteria_ID": "11",
+    "Field_Business_Name": "Whatsapp Phone Number",
+    "Value_Business_reference": "",
+    "Conditions_API_Name": "requester.custom_fields.whatsapp",
+    "Value_API_reference": "",
+    "field6": ""
+  }
+]

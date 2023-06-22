@@ -3,8 +3,13 @@ const db=require('../models')
 const Brands=db.brands;
 const Groups=db.groups;
 const MainMaster=db.main_master
+const MainMasterAction=db.main_master_action
 const Conditions_all=db.condition_all
 const Action=db.action
+const Trigger_Action=db.trigger_action
+const Ticket_forms=db.ticket_forms
+const Set_Schedules=db.schedules
+
 
 const { Sequelize ,Op} = require('sequelize');
 
@@ -115,6 +120,26 @@ exports.readGroupData=async(req,res)=>{
           console.error(err);
         });
 }
+exports.readFormsData=async(req,res)=>{
+  await Ticket_forms.findAll({attributes:['name']})
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
+exports.readSchedulesData=async(req,res)=>{
+  await Set_Schedules.findAll({attributes:['name']})
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
 exports.readConditionAllData=async(req,res)=>{
   const requestID=req.body.condition_all_id
   await Conditions_all.findAll({where:{condition_all_id:requestID}})
@@ -142,6 +167,23 @@ exports.readMainMasterData=async(req,res)=>{
         console.error(err);
       });
 }
+
+exports.readMainMasterActionData=async(req,res)=>{
+  //const paramTable=req.params.name
+  await MainMasterAction.findAll({/* where:{Field_Business_Name:paramTable} */
+  attributes: [
+    [Sequelize.fn('DISTINCT', Sequelize.col('Field_Business_Name')), 'name'],
+  ],
+  })
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
+
 exports.readMainMaster_obr=async(req,res)=>{
   //const paramTable=req.params.name
   const fb=req.params.fb
@@ -183,6 +225,54 @@ exports.readMainMaster_vbr=async(req,res)=>{
         console.error(err);
       });
 }
+
+exports.readMainMasterActionTriggerValue=async(req,res)=>{
+  
+  try
+  {
+      const fb=req.params.fb
+      const vb=req.params.fb
+      //const paramTable=req.params.name Value_Business_reference
+      const result=await MainMasterAction.findAll({
+      attributes: [
+        [Sequelize.fn('DISTINCT', Sequelize.col('Conditions_API_Name')), 'name'],
+      ],
+      where: {
+        Field_Business_Name:fb
+      },
+      
+  /* ,where:{Field_Business_Name:fb} */})
+      const field=result[0].dataValues.name
+      await Trigger_Action.findAll({attributes:['value'], where:{field:field}}).then(result=>{
+        res.status(200).send(result)
+      })
+      }catch(e){
+        console.log(e)
+      }
+}
+
+
+exports.readMainMasterAction_vbr=async(req,res)=>{
+
+  const fb=req.params.fb
+  //const paramTable=req.params.name  Value_Business_reference
+  await MainMasterAction.findAll({/* where:{Field_Business_Name:paramTable} */
+  attributes: [
+    [Sequelize.fn('DISTINCT', Sequelize.col('Value_Business_reference')), 'name'],
+  ],
+  where: {
+    Field_Business_Name:fb
+  },
+  })
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
+
 
 exports.readAction=async(req,res)=>{
   //const paramTable=req.params.name
