@@ -17,6 +17,7 @@ require('./models')
 app.use('/api',allRoutes)
 
 //Master.sync({force:true})
-app.listen(4000,()=>{
-    console.log("server is listening to port:4000")
+const port=4000
+app.listen(port,()=>{
+    console.log("server is listening to port:",port)
 })
