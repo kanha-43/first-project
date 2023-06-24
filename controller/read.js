@@ -9,7 +9,9 @@ const Action=db.action
 const Trigger_Action=db.trigger_action
 const Ticket_forms=db.ticket_forms
 const Set_Schedules=db.schedules
-
+const Organisations=db.organizations
+const Trigger_Cond_all=db.trigger_cond_all
+const Trigger=db.triggers
 
 const { Sequelize ,Op} = require('sequelize');
 
@@ -130,6 +132,17 @@ exports.readFormsData=async(req,res)=>{
         console.error(err);
       });
 }
+exports.readOrganisationsData=async(req,res)=>{
+  await Organisations.findAll({attributes:['name']})
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        res.status(200).send(rows)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+}
+
 exports.readSchedulesData=async(req,res)=>{
   await Set_Schedules.findAll({attributes:['name']})
       .then(rows => {
@@ -139,7 +152,72 @@ exports.readSchedulesData=async(req,res)=>{
       .catch(err => {
         console.error(err);
       });
+
 }
+
+exports.readTriggerCondAllData=async(req,res)=>{
+  let field=req.params.field
+  let operator=req.params.operator
+  let value=req.params.value
+
+
+  await MainMaster.findAll({/* where:{Field_Business_Name:paramTable} */
+      attributes: [
+        "Conditions_API_Name","Operator_API_Reference","Value_API_reference"
+      ],
+      where: {
+        [Op.and]:[
+          {Field_Business_Name:field},
+        {Operator_business_reference: operator},
+        {Value_Business_reference:value}
+        
+        ]
+      },
+      })
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        field=rows[0].Conditions_API_Name
+        operator=rows[0].Operator_API_Reference
+        value=rows[0].Value_API_reference
+        
+      })
+      .catch(err => {
+        console.error(err);
+      });
+      
+      let cond_all_id_Array=[]
+      
+      
+    await Trigger_Cond_all.findAll({
+        attributes:["condition_all_id"],
+        where:{
+          [Op.and]:[
+            {field:field},
+          {operator: operator},
+          {value:value}
+           
+          ]
+        }
+      }).then(rows=>{
+        rows.map((row,index)=>{
+          cond_all_id_Array[index]=row["condition_all_id"]
+        })
+        console.log(cond_all_id_Array)
+      })
+      await Trigger.findAll({
+        attributes:["title"],
+        where:{
+          id:{
+            [Op.in]:cond_all_id_Array
+          }
+        }
+      }).then(rows=>{
+        res.status(200).send(rows)
+
+      })
+}
+
+
 exports.readConditionAllData=async(req,res)=>{
   const requestID=req.body.condition_all_id
   await Conditions_all.findAll({where:{condition_all_id:requestID}})
