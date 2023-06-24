@@ -1,6 +1,6 @@
 const express =require("express")
 const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk, createMainMaster, createTicketFormBulk, deleteBulk, createMainMasterAction}=require("../controller/master");
-const { readBrandData, readGroupData, readMainMasterData, readBrandID, readConditionAllData, readBrandIdbyID, readBrandByName, readMainMaster_obr, readMainMaster_vbr, readAction, readMainMasterActionData, readMainMasterAction_vbr, readMainMasterActionTriggerValue, readFormsData, readSchedulesData } = require("../controller/read");
+const { readBrandData, readGroupData, readMainMasterData, readBrandID, readConditionAllData, readBrandIdbyID, readBrandByName, readMainMaster_obr, readMainMaster_vbr, readAction, readMainMasterActionData, readMainMasterAction_vbr, readMainMasterActionTriggerValue, readFormsData, readSchedulesData, readOrganisationsData, readTriggerCondAllData } = require("../controller/read");
 
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.get("/getbrands",readBrandData)
 router.get('/getgroups',readGroupData)
 router.get('/getforms',readFormsData)
 router.get('/getschedules',readSchedulesData)
+router.get('/getorganisations',readOrganisationsData)
 
 router.get('/getmaster',readMainMasterData)
 router.get('/getmaster/action',readMainMasterActionData)
@@ -56,5 +57,6 @@ router.get('/getmasterobr/:fb',readMainMaster_obr)
 router.get('/getmastervbr/action/:fb',readMainMasterAction_vbr)
 router.get('/getmastervbr/:op/:fb',readMainMaster_vbr)
 router.get('/getmaster/trigger/action/:fb',readMainMasterActionTriggerValue)
+router.get('/get/entire/trigger/cond/data/:field/:operator/:value',readTriggerCondAllData)
 
 module.exports = router;
