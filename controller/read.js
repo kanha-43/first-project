@@ -205,7 +205,7 @@ exports.readTriggerCondAllData=async(req,res)=>{
         console.log(cond_all_id_Array)
       })
       await Trigger.findAll({
-        attributes:["title"],
+        attributes:["title","id"],
         where:{
           id:{
             [Op.in]:cond_all_id_Array
@@ -215,6 +215,82 @@ exports.readTriggerCondAllData=async(req,res)=>{
         res.status(200).send(rows)
 
       })
+}
+
+exports.readTriggerCondAllData=async(req,res)=>{
+  let field=req.params.field
+  let operator=req.params.operator
+  let value=req.params.value
+
+
+  await MainMaster.findAll({/* where:{Field_Business_Name:paramTable} */
+      attributes: [
+        "Conditions_API_Name","Operator_API_Reference","Value_API_reference"
+      ],
+      where: {
+        [Op.and]:[
+          {Field_Business_Name:field},
+        {Operator_business_reference: operator},
+        {Value_Business_reference:value}
+        
+        ]
+      },
+      })
+      .then(rows => {
+        // `rows` contains an array of objects with only the `column1` property
+        field=rows[0].Conditions_API_Name
+        operator=rows[0].Operator_API_Reference
+        value=rows[0].Value_API_reference
+        
+      })
+      .catch(err => {
+        console.error(err);
+      });
+      
+      let cond_all_id_Array=[]
+      
+      
+    await Trigger_Cond_all.findAll({
+        attributes:["condition_all_id"],
+        where:{
+          [Op.and]:[
+            {field:field},
+          {operator: operator},
+          {value:value}
+           
+          ]
+        }
+      }).then(rows=>{
+        rows.map((row,index)=>{
+          cond_all_id_Array[index]=row["condition_all_id"]
+        })
+        console.log(cond_all_id_Array)
+      })
+      await Trigger.findAll({
+        attributes:["title","id"],
+        where:{
+          id:{
+            [Op.in]:cond_all_id_Array
+          }
+        }
+      }).then(rows=>{
+        res.status(200).send(rows)
+
+      })
+}
+
+exports.showTriggerCondAllDataInTable=async(req,res)=>{
+  let id=req.params.id
+  
+    await Trigger_Cond_all.findAll({
+        attributes:["field","operator","value"],
+        where:{
+          condition_all_id:id
+        }
+      }).then(rows=>{
+        res.status(200).send(rows)  
+      })
+     
 }
 
 
