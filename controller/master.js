@@ -283,17 +283,20 @@ exports.createTriggerBulk=async(req,res)=>{
         category_id:item.category_id
    }))
 //console.log(values)
-   //await Triggers.bulkCreate(values)
+   
+   await Triggers.bulkCreate(values)
+
+   const msg="Notification Data"
    const values1=req.body.triggers.map((item)=>{
     const temp= item.actions?.map((innerItem)=>({
          action_id:item.id,
          field:innerItem.field,
-         value:innerItem.value,
+         value:Array.isArray(innerItem.value)?msg:innerItem.value,
      }))
      return temp
  }).flat()
  
- //await Trigger_Action.bulkCreate(values1)
+    await Trigger_Action.bulkCreate(values1)
  //console.log(values1)
 
 const values2=req.body.triggers.map((item)=>{
@@ -313,7 +316,7 @@ const values2=req.body.triggers.map((item)=>{
       return temp
   }).flat()
 
-await Trigger_Cond_all.bulkCreate(values2)
+    await Trigger_Cond_all.bulkCreate(values2)
 //console.log(values2)
 const values3=req.body.triggers.map((item)=>{
     const temp= item.conditions.any?.map((innerItem)=>({
@@ -325,7 +328,7 @@ const values3=req.body.triggers.map((item)=>{
       return temp
   }).flat()
   //console.log(values3)
- //await Trigger_Cond_any.bulkCreate(values3)
+    await Trigger_Cond_any.bulkCreate(values3)
 
  //res.status(200).send("Bulk insertion completed for all 4 tables .")
 
@@ -344,7 +347,7 @@ const values3=req.body.triggers.map((item)=>{
 }).flat()  
     ).flat().filter(value=>value!==undefined)
 
-   // await Trigger_action_notification_user_grp.bulkCreate(values4)
+    await Trigger_action_notification_user_grp.bulkCreate(values4)
 
     const values5=req.body.triggers.map((item)=>
         item.actions.map((innerItem)=>{
@@ -362,7 +365,7 @@ const values3=req.body.triggers.map((item)=>{
   
     ).flat().filter(value=>value!==undefined)
 
-    //await Trigger_action_notification_webhook.bulkCreate(values5)
+    await Trigger_action_notification_webhook.bulkCreate(values5)
 
     res.status(201).json({
         Message:"Data added",
