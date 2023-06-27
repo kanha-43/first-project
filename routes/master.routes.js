@@ -1,6 +1,6 @@
 const express =require("express")
 const {createData,getData, deleteData, createBulkData, createSupportEmailAddressBulk, createBrandsBulk, createLocalesBulk, createPublicLocalesBulk, createTagsBulk, createDynamicContentBulk, createSchedulesBulk, createTicketFieldsBulk, createWebhooksBulk, createTriggerBulk, createAutomationsBulk, createMacrosBulk, createUserFieldsBulk, createGroupBulk, createSlaPoliciesBulk, createOrganizationsBulk, createOrganizationFieldsBulk, createTicketMasterBulk, createMainMaster, createTicketFormBulk, deleteBulk, createMainMasterAction}=require("../controller/master");
-const { readBrandData, readGroupData, readMainMasterData, readBrandID, readConditionAllData, readBrandIdbyID, readBrandByName, readMainMaster_obr, readMainMaster_vbr, readAction, readMainMasterActionData, readMainMasterAction_vbr, readMainMasterActionTriggerValue, readFormsData, readSchedulesData, readOrganisationsData, readTriggerCondAllData, showTriggerCondAllDataInTable } = require("../controller/read");
+const { readBrandData, readGroupData, readMainMasterData, readBrandID, readConditionAllData, readBrandIdbyID, readBrandByName, readMainMaster_obr, readMainMaster_vbr, readAction, readMainMasterActionData, readMainMasterAction_vbr, readMainMasterActionTriggerValue, readFormsData, readSchedulesData, readOrganisationsData, readTriggerCondAllData, showTriggerCondAllDataInTable, readLocalesData, readTriggerActionAllData, showTriggerActionDataInTable } = require("../controller/read");
 
 const router = express.Router();
 
@@ -10,6 +10,7 @@ router.get('/getgroups',readGroupData)
 router.get('/getforms',readFormsData)
 router.get('/getschedules',readSchedulesData)
 router.get('/getorganisations',readOrganisationsData)
+router.get('/getlocales',readLocalesData)
 
 router.get('/getmaster',readMainMasterData)
 router.get('/getmaster/action',readMainMasterActionData)
@@ -58,6 +59,10 @@ router.get('/getmastervbr/action/:fb',readMainMasterAction_vbr)
 router.get('/getmastervbr/:op/:fb',readMainMaster_vbr)
 router.get('/getmaster/trigger/action/:fb',readMainMasterActionTriggerValue)
 router.get('/get/entire/trigger/cond/data/:field/:operator/:value',readTriggerCondAllData)
+router.get('/get/entire/trigger/action/data/:field/:value',readTriggerActionAllData)
+
 router.post('/showdata/condition/all/data/:id',showTriggerCondAllDataInTable)
+router.post('/showdata/action/data/:id',showTriggerActionDataInTable)
+//showTriggerActionDataInTable
 
 module.exports = router;
